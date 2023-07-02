@@ -1,6 +1,6 @@
 import { fetchFindResult } from './fetchFindResult';
 import { FaSearch } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import css from './Searchbar.module.css';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
@@ -19,15 +19,14 @@ const Searchbar = () => {
 
   const toggleModal = event => {
     if (event) {
-      const { src } = event.target;   
+      const { src } = event.target;
 
       const findObject = data.hits.find(el => el.webformatURL === src);
       setModalPic(findObject);
-      }
-    setShowModal(state => !state );
+    }
+    setShowModal(state => !state);
   };
 
-  
   const handleSubmit = async event => {
     event.preventDefault();
     setLoading(true);
@@ -39,7 +38,7 @@ const Searchbar = () => {
     }
 
     const { data } = await fetchFindResult(name, page);
-  
+
     if (!data || data['hits'].length === 0) {
       setData(false);
       setLoading(false);
@@ -53,18 +52,17 @@ const Searchbar = () => {
 
     setTimeout(() => {
       setLoading(false);
-      setData(data)
+      setData(data);
     }, 1000);
   };
 
   const handlePageIncreace = async () => {
-
     setPage(state => state + 1);
 
     const { data } = await fetchFindResult(name, page);
-    
+
     data.hits = data.hits.concat(data.hits);
-    setData(data)
+    setData(data);
 
     if (page * 12 >= data.totalHits) {
       setPageFlag(false);
@@ -75,7 +73,6 @@ const Searchbar = () => {
   const handleNameChange = event => {
     setName(event.currentTarget.value.toLowerCase());
   };
-
 
   return (
     <>
@@ -105,4 +102,3 @@ const Searchbar = () => {
 };
 
 export default Searchbar;
-
