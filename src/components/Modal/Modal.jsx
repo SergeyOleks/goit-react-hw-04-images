@@ -7,19 +7,14 @@ import { useEffect } from 'react';
 const modalRoot = document.querySelector('#modal-root');
 
 export default function Modal({ onClose, picture }) {
-  const handleKeyDown = e => {
-    if (e.code === 'Escape') {
-      onClose(e);
-    }
-  };
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', (e) => { if (e.code === 'Escape') { onClose(e) } })
 
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [handleKeyDown]);
+    return (() => {
+      window.removeEventListener('keydown', (e) => { if (e.code === 'Escape') { onClose(e) } })
+    })
+  },[onClose]);
 
   const handleBackdropClick = e => {
     if (e.target === e.currentTarget) {
